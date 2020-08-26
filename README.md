@@ -2,7 +2,7 @@
 
 To run this file, make sure you do the following:
 
-    1. npm init - required for package.json
+    1. npm init (May not be needed as Package.json exists in the project)
     2. npm install
     3. npm install mocha - package used for writing test cases
 

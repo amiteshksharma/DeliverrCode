@@ -137,6 +137,30 @@ describe('Block 7', function () {
          [ { name: 'owd', inventory: { apple: 2, orange: 4 } }, { name: 'dm', inventory: { banana: 5, orange: 10 } } ])
       assert.deepEqual(getOutput, []);
     });
+
+    it("return nonempty array with all items from only the first warehouse", function () {
+      const getOutput = inventory.InventoryAllocator({ apple: 5, banana: 5, orange: 5 },
+         [ { name: 'owd', inventory: { apple: 5, orange: 5, banana: 5 } }, { name: 'dm', inventory: { banana: 10, orange: 10 } } ])
+      assert.deepEqual(getOutput, [{ 'owd': { apple: 5, orange: 5, banana: 5 }}]);
+    });
+
+    it("return nonempty array with all items from only the second warehouse", function () {
+      const getOutput = inventory.InventoryAllocator({ apple: 5, banana: 5, orange: 5 },
+         [ { name: 'owd', inventory: { apple: 0, orange: 0} }, { name: 'dm', inventory: { apple: 5, orange: 5, banana: 5 } } ])
+      assert.deepEqual(getOutput, [{ 'dm': { apple: 5, orange: 5, banana: 5 }}]);
+    });
+
+    it("return nonempty array with all items from both warehouses", function () {
+      const getOutput = inventory.InventoryAllocator({ apple: 5, banana: 5, orange: 5 },
+         [ { name: 'owd', inventory: { apple: 2, orange: 3} }, { name: 'dm', inventory: { apple: 5, orange: 5, banana: 5 } } ])
+      assert.deepEqual(getOutput, [{ 'owd': { apple: 2, orange: 3}}, { 'dm': { apple: 3, orange: 2, banana: 5 }}]);
+    });
+
+    it("return empty array when one of the order items is not in either warehouse", function () {
+      const getOutput = inventory.InventoryAllocator({ apple: 5, banana: 5, orange: 5 },
+         [ { name: 'owd', inventory: { apple: 2} }, { name: 'dm', inventory: { apple: 5, banana: 5 } } ])
+      assert.deepEqual(getOutput, []);
+    });
   });
 });
 

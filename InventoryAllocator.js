@@ -31,7 +31,8 @@ class InventoryAllocator {
     
             warehouse.forEach(product => {
                 const getInventoryCount = product['inventory'][item];
-                if(getInventoryCount === undefined) return;
+                if(getInventoryCount === undefined || getInventoryCount === 0) return;
+
                 //Check if value is null at the index inside the inventory array
                 if(getInventoryCount === null) {
                     containsNull = true;
@@ -39,6 +40,7 @@ class InventoryAllocator {
                 }
 
                 const getInventoryName = product['name'];
+                //Gets the index of the object inside the array, returns -1 if not existing
                 const getIndex = output.findIndex(x => Object.keys(x).includes(getInventoryName)) 
 
                 if(itemQuantity >= getInventoryCount) {
