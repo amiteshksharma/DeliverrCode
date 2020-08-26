@@ -1,0 +1,15 @@
+{
+  "name": "deliverr",
+  "version": "1.0.0",
+  "description": "InventoryAllocator, a project assigned by Deliverr",
+  "main": "InventoryAllocator.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^8.1.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Amitesh Sharma",
+  "license": "ISC"
+}
