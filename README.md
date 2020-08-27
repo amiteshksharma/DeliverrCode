@@ -25,3 +25,5 @@ For this problem I made the following assumptions:
    then the return value is an empty array. I made this assumption based on the test cases provided in the Github README
    that provided three simple test cases.
 2. Any null values inside the order object or warehouse array will result in the return value of an empty array
+3. If there is more inventory than the order requires, it will return the number from the order (ie. if the order is {orange: 10} and the warehouse has 15 oranges,
+                                                                                                 then it will have {orange: 10} in the output)

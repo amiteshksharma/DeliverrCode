@@ -84,8 +84,8 @@ class InventoryAllocator {
 
 //Testing inputs to print to 'Output.txt' file
 let Inventory = new InventoryAllocator();
-let value = Inventory.InventoryAllocator({ apple: 5, banana: 5, orange: 5 }, 
-    [ { name: 'owd', inventory: { apple: 2, orange: 4 } }, { name: 'dm', inventory: { banana: 5, orange: 10 } } ]);
+let value = Inventory.InventoryAllocator({ apple: 5, banana: 5, orange: 10, pear: 10 }, 
+    [ { name: 'owd', inventory: { apple: 5, orange: 4 } }, { name: 'dm', inventory: { banana: 5, orange: 10 } }, { name: 'wq', inventory: { banana: 5, orange: 10, pear: 10 } } ]);
     
 //Write the output to file
 fs.writeFile('Output.txt', JSON.stringify(value), (err) => {  
