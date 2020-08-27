@@ -164,3 +164,23 @@ describe('Block 7', function () {
   });
 });
 
+describe('Block 8', function () {
+  describe('Testing with improper inputs', function () {
+    it('Output of error string with improper first and second input', function () {
+      const getOutput = inventory.InventoryAllocator([10, 10, 10], [10, 10, 10])
+      assert.deepEqual(getOutput, "Invalid Input");
+    });
+
+    it('Output of error string with improper first input', function () {
+      const getOutput = inventory.InventoryAllocator("Order", [{ name: 'owd', inventory: { apple: 5, banana: 5 } },
+      { name: 'dm', inventory: { apple: 5, banana: 5} } ])
+     assert.deepEqual(getOutput, "Invalid Input");
+    });
+
+    it('Output of empty array with two warehouses when there is enough inventory for one item but not the other', function () {
+      const getOutput = inventory.InventoryAllocator({ apple: 20, banana: 20 }, ["Object"])
+     assert.deepEqual(getOutput, "Invalid Input");
+    });
+  });
+});
+

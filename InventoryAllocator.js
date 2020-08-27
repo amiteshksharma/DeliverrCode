@@ -15,62 +15,72 @@ class InventoryAllocator {
         //If either input is null, instantly return an empty array
         if(order === null || warehouse === null) return [];
 
+        //Check if order input is of type object, if not return message
+        if(typeof order !== 'object') return "Invalid Input"
+
         //Get all the keys in the 'order' to loop through
         const getKeys = Object.keys(order);
 
         //Output array
         let output = []
         let containsNull = false;
-        getKeys.forEach(item => {
-            let itemQuantity = order[item];
-            //Check for null value inside the 'order' object
-            if(itemQuantity === null) {
-                containsNull = true;
-                return;
-            }
-    
-            warehouse.forEach(product => {
-                const getInventoryCount = product['inventory'][item];
-                if(getInventoryCount === undefined || getInventoryCount === 0) return;
 
-                //Check if value is null at the index inside the inventory array
-                if(getInventoryCount === null) {
+        // Try the code, and return error message if an error occurs
+        try {
+            getKeys.forEach(item => {
+                let itemQuantity = order[item];
+                //Check for null value inside the 'order' object
+                if(itemQuantity === null) {
                     containsNull = true;
                     return;
                 }
-
-                const getInventoryName = product['name'];
-                //Gets the index of the object inside the array, returns -1 if not existing
-                const getIndex = output.findIndex(x => Object.keys(x).includes(getInventoryName)) 
-
-                if(itemQuantity >= getInventoryCount) {
-                    if(getIndex !== -1) {
-                        output[getIndex][getInventoryName][item] = getInventoryCount 
-                        itemQuantity = itemQuantity - getInventoryCount;
-                    } else {
-                        output.push({[getInventoryName]: {[item]: getInventoryCount}});
-                        itemQuantity = itemQuantity - getInventoryCount;
-                    } 
-                    
-                } else {
-                    if(getIndex !== -1) {
-                        if(itemQuantity !== 0) output[getIndex][getInventoryName][item] = itemQuantity 
-                        itemQuantity = 0;    
-                    } else {
-                        if(itemQuantity !== 0) output.push({[getInventoryName]: {[item]: itemQuantity}});
-                        itemQuantity = 0;
+        
+                warehouse.forEach(product => {
+                    const getInventoryCount = product['inventory'][item];
+                    if(getInventoryCount === undefined || getInventoryCount === 0) return;
+    
+                    //Check if value is null at the index inside the inventory array
+                    if(getInventoryCount === null) {
+                        containsNull = true;
+                        return;
                     }
-                    
-                }
+    
+                    const getInventoryName = product['name'];
+                    //Gets the index of the object inside the array, returns -1 if not existing
+                    const getIndex = output.findIndex(x => Object.keys(x).includes(getInventoryName)) 
+    
+                    if(itemQuantity >= getInventoryCount) {
+                        if(getIndex !== -1) {
+                            output[getIndex][getInventoryName][item] = getInventoryCount 
+                            itemQuantity = itemQuantity - getInventoryCount;
+                        } else {
+                            output.push({[getInventoryName]: {[item]: getInventoryCount}});
+                            itemQuantity = itemQuantity - getInventoryCount;
+                        } 
+                        
+                    } else {
+                        if(getIndex !== -1) {
+                            if(itemQuantity !== 0) output[getIndex][getInventoryName][item] = itemQuantity 
+                            itemQuantity = 0;    
+                        } else {
+                            if(itemQuantity !== 0) output.push({[getInventoryName]: {[item]: itemQuantity}});
+                            itemQuantity = 0;
+                        }
+                        
+                    }
+                })
+        
+                //If there is a leftover amount, then there is not enough inventory
+                //Using containsNull as that will return an empty array outside the loop
+                if(itemQuantity > 0) containsNull = true;
             })
     
-            //If there is a leftover amount, then there is not enough inventory
-            //Using containsNull as that will return an empty array outside the loop
-            if(itemQuantity > 0) containsNull = true;
-        })
-
-        if(containsNull) return [];
-        return output;
+            if(containsNull) return [];
+            return output;
+        } catch(error) {
+            console.log("The input is invalid. The first parameter is an OBJECT of orders, the second parameter is an ARRAY of warehouses");
+            return "Invalid Input"
+        }
     }
 }
 
