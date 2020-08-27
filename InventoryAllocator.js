@@ -18,14 +18,12 @@ class InventoryAllocator {
         //Check if order input is of type object, if not return message
         if(typeof order !== 'object') return "Invalid Input"
 
-        //Get all the keys in the 'order' to loop through
         const getKeys = Object.keys(order);
 
         //Output array
         let output = []
         let containsNull = false;
 
-        // Try the code, and return error message if an error occurs
         try {
             getKeys.forEach(item => {
                 let itemQuantity = order[item];
